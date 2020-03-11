@@ -1,1 +1,1 @@
-# richLamdata
+# lamdata-richard-olson
