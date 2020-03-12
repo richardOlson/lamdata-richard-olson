@@ -59,7 +59,7 @@ theStates =  {
                     "Tennessee"	:	"TN",
                     "Texas"	:	"TX",
                     "Utah"	:	"UT",
-                    "Vermont"	:.	"VT",
+                    "Vermont"	: "VT",
                     "Virginia"	:	"VA",
                     "Virgin Islands"	:	"VI",
                     "Washington"	:	"WA",
