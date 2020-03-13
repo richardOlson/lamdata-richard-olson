@@ -40,32 +40,35 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
     This method will generate more data on a dataframe
     and then return the dataframe
 
-    row:        default=None.  It you want to replicate a certain row in the dataframe, 
-    then you put the row index in here. If you put in a list of rows then it
-    will replicate the list of rows in the order they are
-    found in the list. When None is passed in, then the row
-    becomes as if you entered a row with all NAN in it.
+    row :        default=None.  It you want to replicate a certain row 
+        in the dataframe, then you put the row index in here. 
+        If you put in a list of rows then it will replicate the list of
+        rows in the order they are found in the list. When None is 
+        passed in, then the row becomes as if you entered
+        a row with all NAN in it.
     
 
 
-    cols:       default=None.  If you want to replicate a certain column in 
-    the dataframe, then you enter the column. If a list is entered
-    the columns are added in the order in the list.  If None is used 
-    then the all values in the column will be NAN.
+    cols :   default=None.  If you want to replicate a certain column in 
+        the dataframe, then you enter the column. If a list is entered
+        the columns are added in the order in the list.  If None is used 
+        then the all values in the column will be NAN.
+        
+
+
+    axis :       default==0, 0 means will use the index and will add rows.
+        1 will cause columns to be added.
+
     
-
-
-    axis:       default==0, 0 means will use the index and will add rows.
-    1 will cause columns to be added.
-
     
-    
-    df:         The dataFrame that you want the data appended to 
+    df :         The dataFrame that you want the data appended to 
 
 
 
-    num:        Default is 1. This is the number of times you want the rows specified to 
-                be replicated.
+    num :        Default is 1. This is the number of times you want the rows specified to 
+        be replicated.
+
+    returns :    Will return the dataframe with the data added to it
     ''' 
     df = df.copy()
 
