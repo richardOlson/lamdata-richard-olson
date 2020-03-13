@@ -5,7 +5,7 @@
 
 import pandas as pd
 import numpy as np
-from state_dict import theStates
+from lamdata_richard_olson.state_dict import theStates
 
 def state_abbrev(state):
     '''
@@ -131,7 +131,7 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
             # making it a list
             cols = [cols]
         # building the list of series to be added
-        for j in range(num):
+        for k in range(num):
             for i in range(len(cols)):
                 a_col = df.loc[:, cols[i]]
                 
@@ -140,7 +140,8 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
         # builing the new dataframe and then returning it
         completList = [df] + seriesList
         
-    df = pd.concat(objs=completList, axis=1, ignore_index=True, 
-                   names=names )
+    df = pd.concat(objs=completList, axis=1, ignore_index=True
+                    )
     return df
            
+
