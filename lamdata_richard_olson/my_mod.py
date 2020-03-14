@@ -7,7 +7,9 @@ import pandas as pd
 import numpy as np
 from lamdata_richard_olson.state_dict import theStates
 
+
 def state_abbrev(state):
+
     '''
     This method will take in a state and return its
     abbreviation.  If the abbreviation is passed in it will 
@@ -35,7 +37,10 @@ def state_abbrev(state):
 # making the second utility function
 # Will make something that will generate more data
 
+
 def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
+
+
     '''
     This method will generate more data on a dataframe
     and then return the dataframe
