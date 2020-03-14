@@ -7,40 +7,56 @@ import pandas as pd
 import numpy as np
 from lamdata_richard_olson.state_dict import theStates
 
+class State():
 
-def state_abbrev(state):
+   
 
-    '''
-    This method will take in a state and return its
-    abbreviation.  If the abbreviation is passed in it will 
-    return the Full name of the state.
-
-    state:      This is the state that will be either abbreviated or
-                will be not abbreviated.
-    returns:    Will return the opposite of that which is passed into the
-                function
-    '''
-    # Making an upper case of the state
-    state = state.upper()
-    # creating the  return 
-    
-    ans = theStates.get(state)
-    if ans == None:
-        for theKey, theVal in  theStates.items():
-            if state == theVal:
-                return theKey
-            
-        return "That was not a state or territory!"
-    return ans
+    def __init__(self, state):
         
+        self.name = self.__get_state(state)
+
+
+    # Will return just the full state name
+    # if the abbreviation is passed in.
+    def __get_state(self, state):
+        state = state.upper()
+        ans = theStates.get(state)
+        if ans == None:
+            for k, v in theStates.items():
+                if state == v:
+                    return k
+        return state
+    @staticmethod
+    def state_abbrev(state):
+        '''
+        This method will take in a state and return its
+        abbreviation.  If the abbreviation is passed in it will 
+        return the Full name of the state.
+
+        state:      This is the state that will be either abbreviated or
+                    will be not abbreviated.
+        returns:    Will return the opposite of that which is passed into the
+                    function
+        '''
+        # Making an upper case of the state
+        state = state.upper()
+        # creating the  return 
+        
+        ans = theStates.get(state)
+        if ans == None:
+            for theKey, theVal in  theStates.items():
+                if state == theVal:
+                    return theKey
+                
+            return "That was not a state or territory!"
+        return ans
+            
 
 # making the second utility function
 # Will make something that will generate more data
 
 
 def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
-
-
     '''
     This method will generate more data on a dataframe
     and then return the dataframe
