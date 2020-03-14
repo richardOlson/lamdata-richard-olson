@@ -4,7 +4,7 @@
 
 import pandas as pd
 
-from lamdata_richard_olson.my_mod import State
+from lamdata_richard_olson.my_mod import State 
 
 #state = input("Enter a State and we will return the abbreviation  ")
 
@@ -17,4 +17,6 @@ from lamdata_richard_olson.my_mod import State
 print(State.state_abbrev('ut'))
 
 theState = State('NY')
-print(theState.name)
+print(f"\"{theState.name}\"")
+print(theState.abrev)
+print(State.state_abbrev("Utah"))

@@ -6,7 +6,8 @@
 import pandas as pd
 import numpy as np
 from lamdata_richard_olson.state_dict import theStates
-
+# This commented import was used to debug
+#from state_dict import theStates
 class State():
 
    
@@ -14,7 +15,13 @@ class State():
     def __init__(self, state):
         
         self.name = self.__get_state(state)
+        self.abrev = self.__get_abrev()
 
+
+    # Inner method to set the attribute self.abrev
+    def __get_abrev(self):
+        theName = self.name
+        return State.state_abbrev(theName)
 
     # Will return just the full state name
     # if the abbreviation is passed in.
@@ -26,6 +33,7 @@ class State():
                 if state == v:
                     return k
         return state
+    
     @staticmethod
     def state_abbrev(state):
         '''
@@ -38,10 +46,22 @@ class State():
         returns:    Will return the opposite of that which is passed into the
                     function
         '''
-        # Making an upper case of the state
-        state = state.upper()
-        # creating the  return 
-        
+        # Making an upper case of the state abbrev
+        if len(state) <= 2:
+            state = state.upper()
+        else:
+            state = state.lower()
+            # separating by spaces
+            splits = state.split()
+            state = ""
+            for i in range(len(splits)):
+                s = splits[i].capitalize()
+                if state == "":
+                    state += s
+                else:
+                    state += " " + s
+            
+        # getting the abbreviation
         ans = theStates.get(state)
         if ans == None:
             for theKey, theVal in  theStates.items():
@@ -168,4 +188,5 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
                     )
     return df
            
-
+if __name__ == "__main__":
+    State.state_abbrev("Utah")
