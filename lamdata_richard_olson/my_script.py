@@ -20,3 +20,5 @@ theState = State('NY')
 print(f"\"{theState.name}\"")
 print(theState.abrev)
 print(State.state_abbrev("Utah"))
+print(State.make_abbrev_dataframe(pd.DataFrame({"States":["Utah", "Alabama", "Arizona"]}),
+ col="States", name="Abbreviation of States"))

@@ -70,6 +70,51 @@ class State():
                 
             return "That was not a state or territory!"
         return ans
+
+    # Building a function that will make tha dataFrame
+    # for the dataFrame that is passed in
+    @staticmethod
+    def make_abbrev_dataframe(data, col=None, name=None):
+        """This method will return a dataframe that has 
+        another column to added to the dataframe. If the dataframe 
+        has a column of abbreviations then a new column of State full names
+        is added, or vice a versa.  If the data that is passed in 
+        doesn't contain states or abbreviations then the new column 
+        build will contain NAN.
+
+        Data:   A series or a dataframe column is passed in
+
+        col:    If a dataframe is passed in then the col use to map 
+        against will be put here.
+
+        name:   The name of the column to be added to the dataframe or 
+        the data. If none is passed in then name will be "Abbrev_map"
+
+        Returns:  A new dataFrame is returned.
+        """
+        data = data.copy()
+        if name == None:
+            name = "Abbrev_map"
+
+        if(isinstance(data, pd.DataFrame)):
+            assert(col != None), "Need to have a column selected!"
+            theData = data[col] 
+        else:
+            theData = data   
+        colList = []
+
+        for i in range(len(theData)):
+            ans = State.state_abbrev(theData[i])
+            if ans == "That was not a state or territory!":
+                ans = np.nan
+            colList.append(ans)
+        data = pd.DataFrame(data)
+        data[name] = colList
+        return data
+        #return pd.concat([data, pd.Series({name:colList} )],axis=1 )
+
+        
+        
             
 
 # making the second utility function
@@ -189,4 +234,4 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
     return df
            
 if __name__ == "__main__":
-    State.state_abbrev("Utah")
+    State.make_abbrev_dataframe(pd.DataFrame({"States":["Utah", "Alabama", "Arizona"]}), col="States")
