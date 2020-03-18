@@ -2,11 +2,17 @@
 
 ## Instalation
 '''sh
+    --- before version 1.02 are deprecated and no longer function ---
 
     pip install -i https://test.pypi.org/simple/ lambdata-richard-olson
     
-    For the newer version:
     pip install -i https://test.pypi.org/simple/ lambdata-richard-olson==1.0.1
+
+
+    ---- use the following to make it work --- 
+
+    pip install -i https://test.pypi.org/simple/ lambdata-richard-olson==1.0.2
+
    
 
 '''

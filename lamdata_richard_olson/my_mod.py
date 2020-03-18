@@ -111,7 +111,7 @@ class State():
         data = pd.DataFrame(data)
         data[name] = colList
         return data
-        #return pd.concat([data, pd.Series({name:colList} )],axis=1 )
+        
 
         
         
@@ -121,41 +121,45 @@ class State():
 # Will make something that will generate more data
 
 
-def gen_more_data(df, num=1,   row=None, cols=None, axis=None,  ):
+def gen_more_data(df, num=1,   row=None, cols=None, axis=None, names=None ):
     '''
     This method will generate more data on a dataframe
     and then return the dataframe
 
     row :   default=None.  It you want to replicate a certain row 
-        in the dataframe, then you put the row index in here. 
-        If you put in a list of rows then it will replicate the list of
-        rows in the order they are found in the list. When None is 
-        passed in, then the row becomes as if you entered
-        a row with all NAN in it.
+    in the dataframe, then you put the row index in here. 
+    If you put in a list of rows then it will replicate the list of
+    rows in the order they are found in the list. When None is 
+    passed in, then the row becomes as if you entered
+    a row with all NAN in it.
     
 
 
     cols :   default=None.  If you want to replicate a certain column in 
-        the dataframe, then you enter the column. If a list is entered
-        the columns are added in the order in the list.  If None is used 
-        then the all values in the column will be NAN.
-        
+    the dataframe, then you enter the column. If a list is entered
+    the columns are added in the order in the list.  If None is used 
+    then the all values in the column will be NAN.
+    
 
 
     axis :   default==None, 0 means will use the index and will add rows.
-        1 will cause columns to be added. If the row parameter is used, it will 
-        be infered that the axis is 0.  When cols is used it is infered to be that
-        you are using the axis of 1.  When neither row or col is used, then axis must
-        be used
+    1 will cause columns to be added. If the row parameter is used, it will 
+    be infered that the axis is 0.  When cols is used it is infered to be that
+    you are using the axis of 1.  When neither row or col is used, then axis must
+    be used
 
     
     
-    df :         The dataFrame that you want the data appended to 
+    df :   The dataFrame that you want the data appended to 
 
 
 
-    num :        Default is 1. This is the number of times you want the rows specified to 
-        be replicated.
+    num :   Default is 1. This is the number of times you want the rows specified to 
+    be replicated.
+
+    names:   This can be passed in when you want to name the columns that 
+    being appended to the dataframe.  You can pass in a list or a single name.
+    This is only used when you are generating more columns. Default is None.
 
     returns :    Will return the dataframe with the data added to it
     ''' 
@@ -163,51 +167,54 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=None,  ):
 
     the_rowShape, the_colShape = df.shape
     # This is the length of the row or colum being added
-    t_len = 0
+    row_len = 0
+    col_len = 0
     # putting the name out so that I can use 
     # it in a global sense
     arr = None
-    row_col = 0
+    
     seriesList = []
     # setting to the defualt if
     # nothing is passed in.
     if num == None:
         num = 1
     
-    if row != None:
-        axis = 0
-    else:
-        axis = 1
     
+        
     if row == None and cols == None:
         assert(axis != None), "You must choose the axis when no cols or rows are chosen"
         if axis == 0:
             # This tells the number of 
             # columns each row will have
-            t_len = the_colShape
-            # getting the row
-            row_col = row
-            
+            row_len =  num
+            col_len = the_colShape
+                       
             
         else:
-            t_len = the_rowShape
-            row_col = cols
+            row_len = the_rowShape
+            col_len = num
             
 
         # This is building the empty np array to then add to the 
-        if row_col == None:
-            arr = np.empty(t_len, num)
-            arr[:] = np.NAN
-            # making the dataFrame
-            newDf = pd.DataFrame(data=arr)
-            seriesList.append(newDf)
-            # assigning num to 1 to use later how 
-            # many times to add this to the
-            # dataframe
+        arr = np.empty((row_len, col_len))
+        arr[:] = np.NAN
+        # making the dataFrame
+        newDf = pd.DataFrame(data=arr, 
+        columns=df.columns.to_list() if axis == 0 else None )
+        # Now want to add to the existing dataframe
+        return pd.concat([df , newDf],axis=axis, ignore_index=(axis == 0),  )
         
+        
+    # Assuring setting of axis when the
+    # col or row is set. Axis will determine 
+    # where to add the extra data
+    if row != None:
+        axis = 0
+    elif cols != None:
+        axis = 1
 
     # Not creating an empty dataframe
-    elif axis == 0:
+    if axis == 0:
         
         if not isinstance(row, list ):
             # create a list
@@ -227,19 +234,59 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=None,  ):
         if not isinstance(cols, list):
             # making it a list
             cols = [cols]
+        
+
+        # making the names be same len as the num
+        
+        if names != None:
+
+            if not isinstance(names, list):
+                names = [names]
+            # Putting the numbers in the name list
+            #names = [str(i) for i in range(len(cols))]
+
+            if len(cols) != len(names):
+                # Building the names list if has 
+                # something in it.
+                theNames = []
+                while len(theNames) < len(cols):
+                    for i in range(len(names)):
+                        theNames.append(names[i])
+                        if len(theNames) == len(cols):
+                            break
+                names = theNames
+
         # building the list of series to be added
         for k in range(num):
             for i in range(len(cols)):
                 a_col = df.loc[:, cols[i]]
-                
-                seriesList.append(a_col.to_frame())
+
+                if names == None:
+                    seriesList.append(a_col.to_frame())
+                else:
+                    df[names[i] + str("_") +str(k)] = a_col.to_list()
+
+        if names == None:
+            completeList = [df] + seriesList
+            df = pd.concat(completeList, axis=axis)
+
+        return df
 
         # builing the new dataframe and then returning it
-        completList = [df] + seriesList
+       # completList = [df] + seriesList
         
-    df = pd.concat(objs=completList, axis=1, ignore_index=True
-                    )
-    return df
+    #df = pd.concat(objs=completList, axis=1, ignore_index=True, 
+           # names=name
+
+         #)
+    #return df
            
 if __name__ == "__main__":
-    State.make_abbrev_dataframe(pd.DataFrame({"States":["Utah", "Alabama", "Arizona"]}), col="States")
+   # State.make_abbrev_dataframe(pd.DataFrame({"States":["Utah", "Alabama", "Arizona"]}), col="States")
+
+    #gen_more_data(pd.DataFrame({'Y':["CAR", "Pig", "year"], "Howdy": [1,2,3]}), num=5, cols=None, axis=1 )
+    #gen_more_data(pd.DataFrame({'Y':["CAR", "Pig", "year"], "Howdy": [1,2,3]}), 
+        #num=5, cols=None, axis=0 )
+
+    print(gen_more_data(pd.DataFrame({'Y':["CAR", "Pig", "year"], "Howdy": [1,2,3]}), 
+        num=3, cols=['Y', "Howdy"], axis=1, names=["joe", 'jared', 'Frank'] ))
