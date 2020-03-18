@@ -9,7 +9,7 @@ with open("README.md", "r") as fh:
 
 setup(
     name="lambdata_richard_olson",
-    version="1.00.2",
+    version="1.00.21",
     author="R Olson",
     author_email="rchiro@gmail.com",
     description="For example purposes",

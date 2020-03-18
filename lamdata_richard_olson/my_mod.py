@@ -265,6 +265,7 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=None, names=None ):
                     seriesList.append(a_col.to_frame())
                 else:
                     df[names[i] + str("_") +str(k)] = a_col.to_list()
+                    
 
         if names == None:
             completeList = [df] + seriesList

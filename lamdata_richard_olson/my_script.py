@@ -31,4 +31,4 @@ print(gen_more_data(pd.DataFrame({'Y':["CAR", "Pig", "year"], "Howdy": [1,2,3]})
 num=5, cols=["Y", 'Howdy'], axis=0 ))
 print("\n")
 print(gen_more_data(pd.DataFrame({'Y':["CAR", "Pig", "year"], "Howdy": [1,2,3]}), 
-num=3, cols=['Y', "Howdy"], axis=1, names=['Y', 'Howdy'] ))
+num=1, cols=['Y', "Howdy"], axis=1, names=['Y', 'Howdy'] ))
