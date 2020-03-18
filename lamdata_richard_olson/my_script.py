@@ -4,7 +4,7 @@
 
 import pandas as pd
 
-from lamdata_richard_olson.my_mod import State 
+from lamdata_richard_olson.my_mod import State,  gen_more_data 
 
 #state = input("Enter a State and we will return the abbreviation  ")
 
@@ -22,3 +22,7 @@ print(theState.abrev)
 print(State.state_abbrev("Utah"))
 print(State.make_abbrev_dataframe(pd.DataFrame({"States":["Utah", "Alabama", "Arizona"]}),
  col="States", name="Abbreviation of States"))
+
+
+print(gen_more_data(pd.DataFrame({"X": [1,2,3], "Y":[5,6,7], "Z":[8,9,10]}),num=5, 
+row=[2,1] ))

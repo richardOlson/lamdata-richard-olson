@@ -121,12 +121,12 @@ class State():
 # Will make something that will generate more data
 
 
-def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
+def gen_more_data(df, num=1,   row=None, cols=None, axis=None,  ):
     '''
     This method will generate more data on a dataframe
     and then return the dataframe
 
-    row :        default=None.  It you want to replicate a certain row 
+    row :   default=None.  It you want to replicate a certain row 
         in the dataframe, then you put the row index in here. 
         If you put in a list of rows then it will replicate the list of
         rows in the order they are found in the list. When None is 
@@ -142,8 +142,11 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
         
 
 
-    axis :       default==0, 0 means will use the index and will add rows.
-        1 will cause columns to be added.
+    axis :   default==None, 0 means will use the index and will add rows.
+        1 will cause columns to be added. If the row parameter is used, it will 
+        be infered that the axis is 0.  When cols is used it is infered to be that
+        you are using the axis of 1.  When neither row or col is used, then axis must
+        be used
 
     
     
@@ -171,8 +174,13 @@ def gen_more_data(df, num=1,   row=None, cols=None, axis=0,  ):
     if num == None:
         num = 1
     
+    if row != None:
+        axis = 0
+    else:
+        axis = 1
+    
     if row == None and cols == None:
-
+        assert(axis != None), "You must choose the axis when no cols or rows are chosen"
         if axis == 0:
             # This tells the number of 
             # columns each row will have

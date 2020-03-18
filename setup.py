@@ -4,8 +4,8 @@ from setuptools import find_packages, setup
 with open("README.md", "r") as fh:
     long_description = fh.read()
 setup(
-    name="lambdata-richard-olson",
-    version="1.0",
+    name="lambdata_richard_olson",
+    version="1.00.1",
     author="R Olson",
     author_email="rchiro@gmail.com",
     description="For example purposes",
