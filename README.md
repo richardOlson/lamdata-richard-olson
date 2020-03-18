@@ -5,7 +5,7 @@
 
     pip install -i https://test.pypi.org/simple/ lambdata-richard-olson
     
-    ###For the newer version:
+    For the newer version:
     pip install -i https://test.pypi.org/simple/ lambdata-richard-olson==1.0.1
    
 
