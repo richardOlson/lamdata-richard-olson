@@ -15,7 +15,7 @@ setup(
     description="For example purposes",
     long_description=long_description,
     long_description_content_type="text/markdown", # required if using a md file for long desc
-    #license="MIT",
+    license="MIT",
     url="https://github.com/richardOlson/lamdata-richard-olson",
     #keywords="",
     packages=find_packages(), # ["my_lambdata"]

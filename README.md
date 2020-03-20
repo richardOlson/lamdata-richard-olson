@@ -1,7 +1,7 @@
 # lamdata-richard-olson
 
 ## Instalation
-'''sh
+'''
 
 
     --- before version 1.021 are deprecated and no longer function --- 
@@ -16,17 +16,30 @@
 
 ## Usage
 '''
-    Has a function, state_abbrev() to return the full name of a state if 
-    the abbreviation is given. Or will return the abbreviation if the full 
-    name of the state is given.
+    State class used to get the abrev and full name of a state.  Will hold
+    both as attributes.
+
+    A static method in State called state_abbrev() can used to return
+    the full name of a state if the abbreviation is passed in. 
+    The same method will return the abbreviation when the full name of the 
+    state is passed in to the method.
     
-    Can also use a static method from the State class to pass in a dataframe which has either 
-    a column of the states or the states abbreviations and the function will cause another
-    column to be added on that has the other(the abbreviation or the  state's full name)
+    
+    make_abbrev_dataframe(data, col=None, name=None):
+            This static method will create a new column on the dataframe that contains either the full name or the abbreviation, depending on which one was orginally found in the dataframe passed in to the method.  
     
 
-    gen_more_data() :   Used to generate more rows or columns of a dataframe
-                        Will  either generate copies of specified rows or columns or can 
-                        also add row and columns with NAN added in.
+    gen_more_data(df, num=1,   row=None, cols=None, axis=None, names=None ):
+            This funcition is used to generate more rows or columns of a              dataframe.  Will  either generate copies of specified rows or columns or can
+            also add row and columns with NAN added in.
 
+
+
+    ##Dependancies:
+    * pandas
+    * numpy
+
+
+    ##License
+    MIT
 '''
